@@ -1,0 +1,40 @@
+version: '3'
+services:
+    gitlab-server:
+      image: 'gitlab/gitlab-ce:latest'
+      container_name: gitlab-server
+      restart: always
+      #hostname: 'gitlab.sinesio.io'
+      environment:
+        GITLAB_OMNIBUS_CONFIG: 
+          external_url 'http://172.17.0.1'
+          #external_url 'http://172.17.0.1:8089'
+      ports:
+        - '443:443'
+        - '80:80'
+        - '22:22'
+      volumes:
+        - '/opt/gitlab/config:/etc/gitlab'
+        - '/opt/gitlab/logs:/var/log/gitlab'
+        - '/opt/gitlab/data:/var/opt/gitlab'
+
+    #runner-register:
+    #  image: 'gitlab/gitlab-runner'
+    #  container_name: gitlab-runner
+    #  volumes:
+        # - '/opt/gitlab/runners/shared/config:/etc/gitlab-runner'
+         #- '/srv/gitlab-runner/config:/etc/gitlab-runner'
+        
+    gitlab-runner-shared:
+      image: 'gitlab/gitlab-runner:latest'
+      container_name: gitlab-runner-shared
+      volumes:
+        - '/opt/gitlab/runners/shared/config:/etc/gitlab-runner'
+
+    gitlab-runner-shared-2:
+      image: 'gitlab/gitlab-runner:latest'
+      container_name: gitlab-runner-shared-2
+      volumes:
+        - '/opt/gitlab/runners/shared2/config:/etc/gitlab-runner2'
+        - '/var/run/docker.sock:/var/run/docker.sock'
+  

@@ -30,6 +30,7 @@ services:
       container_name: gitlab-runner-shared
       volumes:
         - '/opt/gitlab/runners/shared/config:/etc/gitlab-runner'
+        - '/var/run/docker.sock:/var/run/docker.sock'
 
     gitlab-runner-shared-2:
       image: 'gitlab/gitlab-runner:latest'
@@ -37,4 +38,4 @@ services:
       volumes:
         - '/opt/gitlab/runners/shared2/config:/etc/gitlab-runner2'
         - '/var/run/docker.sock:/var/run/docker.sock'
-  
+
